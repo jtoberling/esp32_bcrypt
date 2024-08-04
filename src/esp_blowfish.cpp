@@ -16,9 +16,9 @@ void ESP_Blowfish::initialize(const uint8_t* key, size_t keyLength) {
 void ESP_Blowfish::encrypt(uint32_t& l, uint32_t& r) {
     for (int i = 0; i < 16; i += 2) {
         l ^= pArray[i];
-        r ^= F(l);
+        r ^= feistelFunction(l);
         r ^= pArray[i + 1];
-        l ^= F(r);
+        l ^= feistelFunction(r);
     }
     l ^= pArray[16];
     r ^= pArray[17];
@@ -30,9 +30,9 @@ void ESP_Blowfish::encrypt(uint32_t& l, uint32_t& r) {
 void ESP_Blowfish::decrypt(uint32_t& l, uint32_t& r) {
     for (int i = 16; i > 0; i -= 2) {
         l ^= pArray[i + 1];
-        r ^= F(l);
+        r ^= feistelFunction(l);
         r ^= pArray[i];
-        l ^= F(r);
+        l ^= feistelFunction(r);
     }
     l ^= pArray[1];
     r ^= pArray[0];
@@ -41,7 +41,7 @@ void ESP_Blowfish::decrypt(uint32_t& l, uint32_t& r) {
     r = temp;
 }
 
-uint32_t ESP_Blowfish::F(uint32_t x) {
+uint32_t ESP_Blowfish::feistelFunction(uint32_t x) {
     uint8_t a = (x >> 24) & 0xFF;
     uint8_t b = (x >> 16) & 0xFF;
     uint8_t c = (x >> 8) & 0xFF;

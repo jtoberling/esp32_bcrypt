@@ -8,6 +8,8 @@
 
 ESP_BCrypt::ESP_BCrypt() {
     // Initialize Blowfish state
+    ESP_Blowfish blowfish;
+    this->blowfish = blowfish;
 }
 
 String ESP_BCrypt::generateSalt(int cost) {
@@ -48,11 +50,11 @@ void ESP_BCrypt::initializeBlowfishState(const String& password, const String& s
     memcpy(key, password.c_str(), password.length());
 
     // Initialize Blowfish state with the key and salt
-    blowfish.initialize(key, password.length());
+    this->blowfish.initialize(key, password.length());
 
     // Repeat the key expansion process according to the cost factor
     for (int i = 0; i < (1 << cost); ++i) {
-        blowfish.initialize(key, password.length());
+        this->blowfish.initialize(key, password.length());
     }
 }
 
@@ -62,7 +64,7 @@ String ESP_BCrypt::encryptMagicValue() {
 
     // Encrypt the magic value 64 times
     for (int i = 0; i < 64; ++i) {
-        blowfish.encrypt(magicValue[0], magicValue[1]);
+        this->blowfish.encrypt(magicValue[0], magicValue[1]);
     }
 
     // Return the encrypted magic value as a string
@@ -92,15 +94,6 @@ bool ESP_BCrypt::bcryptVerify(const String& password, const String& hash) {
     String newHash = bcrypt(password, hash);
 
     return compareHashes(newHash, hash);
-}
-
-void ESP_BCrypt::initializeBlowfishState(const String& password, const String& salt, int cost) {
-    // Initialize Blowfish state with password and salt
-}
-
-String ESP_BCrypt::encryptMagicValue() {
-    // Encrypt the magic value using Blowfish
-    return "";
 }
 
 int ESP_BCrypt::extractCostFactor(const String& salt) {

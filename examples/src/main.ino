@@ -5,6 +5,7 @@ ESP_BCrypt bcrypt;
 
 void setup() {
     Serial.begin(115200);
+	delay(3000);
     while (!Serial);
 
     String password = "mySecretPassword";
