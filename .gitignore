@@ -1,0 +1,9 @@
+.pioenvs
+.piolibdeps
+.gcc-flags.json
+*.o
+*.elf
+.pio
+.gpteng
+prompt
+docs/
