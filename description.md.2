@@ -1,0 +1,45 @@
+ ESP_BCrypt Library Description
+
+# Bcrypt Algorithm Overview
+
+crypt is a password hashing function designed by Niels Provos and David Mazières, based on the Blowfish cipher, and presented at USENIX in 1999. It is widely used for securely hashing passwords due to its adaptive nature, which allows increasing the cost of hashing as computational power increases.
+
+## Mathematical Description
+
+. **Salt Generation**:
+  - A random salt of 16 bytes is generated.
+  - The salt is Base64 encoded.
+  - The encoded salt is prefixed with the bcrypt version (e.g., "$2b$") and the cost factor (e.g., "12$").
+
+. **Hashing Process**:
+  - The password is combined with the salt and the cost factor.
+  - The Blowfish cipher is initialized with the key derived from the password.
+  - The password is hashed multiple times (controlled by the cost factor) using the Blowfish cipher.
+  - The final hash is Base64 encoded.
+
+. **Verification Process**:
+  - The password is hashed using the salt and cost factor extracted from the hashed password.
+  - The generated hash is compared to the provided hashed password.
+
+## Best Practices
+
+ **Default Cost Factor**: The default cost factor should be set to 12, which provides a good balance between security and performance.
+ **Salt Length**: The salt should be 16 bytes long.
+ **Hash Length**: The resulting hash should be 60 characters long.
+
+# Implementation Details
+
+he library uses the mbedtls library for random number generation and ESP32 core functions for other necessary operations. The Blowfish cipher is implemented in the `ESP_Blowfish` class, which is used by the `ESP_BCrypt` class for the bcrypt hashing process.
+
+## Functions
+
+ `generateSalt(int cost = ESPBC_CONST_DEFAULT_COST)`: Generates a random salt with the specified cost factor.
+ `bcrypt(const String& password, const String& salt)`: Hashes the password using the provided salt.
+ `bcryptVerify(const String& password, const String& hash)`: Verifies if the password matches the provided hashed password.
+
+## Default Values
+
+ `ESPBC_CONST_DEFAULT_COST`: Default cost factor (12).
+ `ESPBC_CONST_SALT_LENGTH`: Salt length (16 bytes).
+ `ESPBC_CONST_HASH_LENGTH`: Hash length (60 characters).
+
