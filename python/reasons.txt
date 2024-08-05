@@ -1,0 +1,5 @@
+The OverflowError: int too big to convert occurs because the integer values being converted to bytes in the encrypt_block method are too large to fit into 4 bytes (32 bits). This happens because the operations inside the Feistel network rounds can produce results that exceed the 32-bit limit, especially when large integers are involved in the calculations.
+
+Recommendations to fix the code:
+1. Ensure that all integer operations are within the 32-bit limit.
+2. Use modular arithmetic to prevent overflow during calculations.

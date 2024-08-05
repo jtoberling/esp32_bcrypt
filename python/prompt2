@@ -1,0 +1,9 @@
+Analze the following error and the code and provide the reasons in './reasons.txt' why it has happen. 
+Also create recommendations how to fix the code. 
+
+Traceback (most recent call last):
+  File "src/blowfish.py", line 65, in <module>
+    encrypted_block = blowfish.encrypt_block(block)
+  File "src/blowfish.py", line 45, in encrypt_block
+    return left.to_bytes(4, 'big') + right.to_bytes(4, 'big')
+OverflowError: int too big to convert

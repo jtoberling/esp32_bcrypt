@@ -1,0 +1,12 @@
+Explain how blowish algorithm works realy detailed - put it to description.md file.
+Create a workingd python3 code Do not truncate code like for for brevity - provide full working implementation.
+Generate a helper class as standalone file to demonstrate blowfish encoding - do not use any libraries.
+Do not use struct in code!
+Create a namespaced class for the function and store P-Array and S-Box as reusable class vars.
+Do not use short function names or variables names, but do a long descriptive name both for the functions both for the variables.
+Define class constanses for the applied length where the algorithm has free choice.
+On P-Array and S-Box initialization do it programmatically with random.
+To demonstrate the code is working in main encode a long string - provide it's steps as an output.
+Ensure that there are no "OverflowError: int too big to convert" during encrypting blocks.
+
+
